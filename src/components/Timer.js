@@ -3,6 +3,11 @@ import { FaPlay, FaStopCircle } from "react-icons/fa";
 import { BiReset } from "react-icons/bi";
 import { BsPlusLg } from "react-icons/bs";
 import { AiOutlineMinus } from "react-icons/ai";
+import {useContext,createContext} from 'react'
+
+
+const Context=createContext();
+
 
 let temps = 0;
 const Timer = () => {
@@ -60,27 +65,19 @@ const Timer = () => {
               if (0 < min) {
                 setMin((min) => min - (0.5));
               } 
-              // else if(min<=0){
-              //   setMin((min)=>min+0);
-              // }
+              else if(min===0 && sec===0){
+                setMin((min)=>min+(brek));
+                setMin((sec)=>sec+59);
+              }
+              else{
+                setMin((min)=>min+25)
+                setMin((sec)=>sec+59);
+              }
           } 
-        // else if (sec === 0 && min === 0) 
-        //   {
-        //     to = 0;
-        //     // setMin((min) => min + 0);
-        //     // setSec((sec) => sec + 0);
-        //     setMin((min)=>min+brek)
-        //   }
         return to;
       });
     }, 1000);
-    if(min===0){
-      setMin((min)=>min+brek)
-    }
-    else if(min===0 && sec===0){
-        setMin((min) => min + 24);
-        setSec((sec) => sec + 59);
-    }
+    
     setActif(false);
   };
   // const Stopped = () => {
@@ -98,12 +95,12 @@ const Timer = () => {
   return (
     <div
       className="flex flex-col justify-between gap-4 
-        items-center w-2/4 h-6/8 border-5 bg-gray-100 p-50 my-56 shadow-lg"
+        items-center w-2/4 h-6/8 border-5 bg-gray-100  my-56 shadow-lg rounded-full"
     >
       {/* Les commandes pour augmentation des munites et Sessions */}
       <div className="flex justify-between gap-20 bg-blue-500 w-full text-white shadow-lg text-2xl">
         <div>
-          <h2>Session Break</h2>
+          <h2>Break</h2>
           <hr />
           <div className="flex justify-between">
             <button type="button" onClick={breaking}>
@@ -117,7 +114,7 @@ const Timer = () => {
         </div>
         <h5 className="text-xl">Session</h5>
         <div>
-          <h5>Session Lenght</h5>
+          <h5>Lenght</h5>
           <hr />
           <div className="flex justify-between">
             <button type="button" onClick={Addlength}>
